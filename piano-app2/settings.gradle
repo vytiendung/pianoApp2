@@ -1,0 +1,4 @@
+include ':app'
+include ':MIDIDriver'
+include ':rCSheetMusic'
+include ':cocos2d_android'

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.vtd.pianoapp.keyboard.KeyboardRootView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/keyboard_root">
+
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/note_anim_container"/>
+
+    <com.vtd.pianoapp.keyboard.KeyboardContainer
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/keyboard_container">
+
+        <RelativeLayout android:layout_height="match_parent"
+                        android:layout_width="match_parent">
+
+            <View
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/colorAccent"
+            />
+
+            <com.vtd.pianoapp.keyboard.PianoView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/piano_view"
+                    android:layout_gravity="bottom"/>
+        </RelativeLayout>
+    </com.vtd.pianoapp.keyboard.KeyboardContainer>
+</com.vtd.pianoapp.keyboard.KeyboardRootView>

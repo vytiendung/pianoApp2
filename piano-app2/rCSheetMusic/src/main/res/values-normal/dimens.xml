@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- sheet -->
+    <dimen name="w_sheet_btn_resize_height">32dp</dimen>
+    <dimen name="w_sheet_btn_resize_width">51dp</dimen>
+</resources>
