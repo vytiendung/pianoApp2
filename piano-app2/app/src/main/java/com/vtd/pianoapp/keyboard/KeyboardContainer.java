@@ -77,7 +77,7 @@ public class KeyboardContainer extends HorizontalScrollView {
 								lookScroll = false;
 							}
 						});
-						scrollingListener.notifyOnScroll(-roundedValue);
+//						scrollingListener.notifyOnScroll(roundedValue);
 					}
 				} catch (Exception ex) {
 					ex.printStackTrace();
@@ -119,8 +119,11 @@ public class KeyboardContainer extends HorizontalScrollView {
 		if (!lookScroll) {
 			scrollXOnScale = x;
 			super.scrollTo(x, y);
+			scrollingListener.notifyOnScroll(x);
+
 		} else {
 			super.scrollTo(scrollXOnScale, y);
+			scrollingListener.notifyOnScroll(y);
 		}
 	}
 
@@ -132,7 +135,7 @@ public class KeyboardContainer extends HorizontalScrollView {
 		getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
 			@Override
 			public void onScrollChanged() {
-				scrollingListener.notifyOnScroll(-getScrollX());
+				scrollingListener.notifyOnScroll(getScrollX());
 			}
 		});
 	}
@@ -324,7 +327,7 @@ public class KeyboardContainer extends HorizontalScrollView {
 				lookScroll = false;
 			}
 		});
-		scrollingListener.notifyOnScroll(-roundedValue);
+//		scrollingListener.notifyOnScroll(roundedValue);
 	}
 
 	public void changeThemeKeyboard(Activity activity) {

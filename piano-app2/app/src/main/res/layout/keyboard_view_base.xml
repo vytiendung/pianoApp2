@@ -5,24 +5,19 @@
         android:layout_height="match_parent"
         android:id="@+id/keyboard_root">
 
-    <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/note_anim_container"/>
-
     <com.vtd.pianoapp.keyboard.KeyboardContainer
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/keyboard_container">
 
-        <RelativeLayout android:layout_height="match_parent"
-                        android:layout_width="match_parent">
+        <RelativeLayout android:layout_height="wrap_content"
+                      android:orientation="vertical"
+                      android:layout_width="wrap_content">
 
-            <View
+            <com.vtd.pianoapp.keyboard.AnimationContainerView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@color/colorAccent"
-            />
+                    android:id="@+id/note_anim_container"/>
 
             <com.vtd.pianoapp.keyboard.PianoView
                     android:layout_width="wrap_content"

@@ -10,4 +10,5 @@ public class SharedKeyboardParams {
 	public float whiteKeyWidth;
 	public float blackKeyWidth;
 	public float contentWidth;
+	public int keyboardW;
 }

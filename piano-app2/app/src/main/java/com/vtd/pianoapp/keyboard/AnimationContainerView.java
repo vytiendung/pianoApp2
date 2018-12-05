@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import com.vtd.pianoapp.common.Config;
 import com.vtd.pianoapp.common.Constant;
 import com.vtd.pianoapp.object.Position;
@@ -39,10 +40,24 @@ public class AnimationContainerView extends View implements KeyboardScalingObser
 	}
 
 	private void init() {
-		this.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+		Log.d("abcxxx", "init: " + getHeight() + " " + getWidth());
 		bitmapPlist = BitmapUtils.getBitmapFromPlist(Config.getInstance().imgPath + "spriteCache.plist");
 		keyPaint = new Paint();
 		keyPaint.setDither(true);
+		post(new Runnable() {
+			@Override
+			public void run() {
+				Log.d("abcxxx onSizeChanged", "run: " + keyboardParams.keyboardW);
+				setLayoutParams(new RelativeLayout.LayoutParams(keyboardParams.keyboardW, getHeight()));
+			}
+		});
+
+	}
+
+	@Override
+	protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+		Log.d("abcxxx", "onSizeChanged:2 " + w + " " + h + " " + oldh + " " + oldw);
+		super.onSizeChanged(w, h, oldw, oldh);
 	}
 
 	@Override
@@ -51,7 +66,7 @@ public class AnimationContainerView extends View implements KeyboardScalingObser
 	}
 
 	private void render(Canvas canvas) {
-		Log.d("abcxxx", "render: ");
+		Log.d("abcxxx", "render: " + getWidth() + " " + getHeight());
 		float key_guide_w = KeyboardWidth.whiteKeyWidthPixels() * Constant.WIDTH_BLACK_RATIO;
 		float key_guide_h = Config.getInstance().winHeight - KeyboardHeight.currentHeightPixels();
 		float key_guide_w_del =  key_guide_w/4;
@@ -61,7 +76,7 @@ public class AnimationContainerView extends View implements KeyboardScalingObser
 			String name = Config.getInstance().noteList.get(i);
 			if (name.contains("m")) {
 				Position point = keyboardParams.keyPosMapping.get(i);
-				RectF desRect = new RectF(point.x - key_guide_w_del , point.y - key_guide_h, point.x + key_guide_w_del , point.y);
+				RectF desRect = new RectF(point.x + key_guide_w_del , point.y - key_guide_h, point.x + key_guide_w - key_guide_w_del , point.y);
 				canvas.drawBitmap(bitmapPlist.image, bitmapInfoProperty.rect, desRect, keyPaint);
 			}
 		}
@@ -82,6 +97,6 @@ public class AnimationContainerView extends View implements KeyboardScalingObser
 
 	@Override
 	public void onScroll(int scrollX) {
-
+//		scrollTo(scrollX, getScrollY());
 	}
 }

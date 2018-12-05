@@ -281,7 +281,10 @@ public class PianoView extends View implements  KeyboardScalingObserver {
 	@Override
 	protected void onSizeChanged(int w, int h, int oldw, int oldh) {
 //		Log.d(TAG, "onSizeChanged: xxxx");
+		Log.d("abcxxx", "onSizeChanged:1 " + w + " " + h + " " + oldh + " " + oldw);
+
 		super.onSizeChanged(w, h, oldw, oldh);
+		keyboardParams.keyboardW = w;
 		calculateKeyboardPosition();
 	}
 

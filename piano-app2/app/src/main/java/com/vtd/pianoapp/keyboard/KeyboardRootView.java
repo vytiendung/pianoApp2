@@ -15,7 +15,7 @@ import java.util.ArrayList;
 public class KeyboardRootView extends RelativeLayout implements KeyboardProxy {
 
 	private AnimationContainerScene animationScene;
-	private AnimationContainerView animationContainerView;
+//	private AnimationContainerView animationContainerView;
 	private KeyboardContainer keyboardContainer;
 
 	public KeyboardRootView(Context context, AttributeSet attrs) {
@@ -24,22 +24,23 @@ public class KeyboardRootView extends RelativeLayout implements KeyboardProxy {
 
 	public void requestUI(Context context, SurfaceViewConfig builder) {
 		keyboardContainer = findViewById(R.id.keyboard_container);
-		RelativeLayout noteAnimContainer = findViewById(R.id.note_anim_container);
+		AnimationContainerView noteAnimContainer = findViewById(R.id.note_anim_container);
 		animationScene = new AnimationContainerScene(context, builder);
 		animationScene.setKeyboardParams(keyboardContainer.pianoView.getKeyboardParams());
-		animationContainerView = new AnimationContainerView(context,keyboardContainer.pianoView.getKeyboardParams());
+//		animationContainerView = new AnimationContainerView(context,keyboardContainer.pianoView.getKeyboardParams());
+		noteAnimContainer.setKeyboardParams(keyboardContainer.pianoView.getKeyboardParams());
 		float whiteKeyActualHeight = KeyboardHeight.currentHeightPixels();
 		Log.d("ttt", "whiteKeyActualHeight = " + whiteKeyActualHeight);
 		keyboardContainer.pianoView.setContentHeight((int) whiteKeyActualHeight);
-		addOnScaleListener(animationContainerView);
-		addOnScrollListener(animationContainerView);
+		addOnScaleListener(noteAnimContainer);
+		addOnScrollListener(noteAnimContainer);
 		keyboardContainer.requestUI();
-		animationContainerView.setBackgroundColor(MyApplication.getInstance().getResources().getColor(R.color.colorBlack));
+		noteAnimContainer.setBackgroundColor(MyApplication.getInstance().getResources().getColor(R.color.colorBlack));
 
 		if (builder.getMode() == SurfaceViewConfig.CHALLENGE_MODE || builder.getMode() == SurfaceViewConfig.PRACTICE_MODE) {
 			animationScene.drawGuideline();
 		}
-		noteAnimContainer.addView(animationContainerView, 0);
+//		noteAnimContainer.addView(animationContainerView, 0);
 	}
 
 	public void addOnScaleListener(KeyboardScalingObserver observer) {
