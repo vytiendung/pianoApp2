@@ -44,13 +44,13 @@ public class AnimationContainerView extends View implements KeyboardScalingObser
 		bitmapPlist = BitmapUtils.getBitmapFromPlist(Config.getInstance().imgPath + "spriteCache.plist");
 		keyPaint = new Paint();
 		keyPaint.setDither(true);
-		post(new Runnable() {
-			@Override
-			public void run() {
-				Log.d("abcxxx onSizeChanged", "run: " + keyboardParams.keyboardW);
-				setLayoutParams(new RelativeLayout.LayoutParams(keyboardParams.keyboardW, getHeight()));
-			}
-		});
+//		post(new Runnable() {
+//			@Override
+//			public void run() {
+//				Log.d("abcxxx onSizeChanged", "run: " + keyboardParams.keyboardW);
+//				setLayoutParams(new RelativeLayout.LayoutParams(keyboardParams.keyboardW, getHeight()));
+//			}
+//		});
 
 	}
 

@@ -15,8 +15,12 @@
                       android:layout_width="wrap_content">
 
             <com.vtd.pianoapp.keyboard.AnimationContainerView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/piano_view"
+                    android:layout_alignTop="@+id/piano_view"
+                    android:layout_alignStart="@+id/piano_view"
+                    android:layout_alignEnd="@+id/piano_view"
                     android:id="@+id/note_anim_container"/>
 
             <com.vtd.pianoapp.keyboard.PianoView
