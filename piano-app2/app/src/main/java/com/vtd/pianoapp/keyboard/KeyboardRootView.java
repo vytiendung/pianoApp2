@@ -14,8 +14,8 @@ import java.util.ArrayList;
 
 public class KeyboardRootView extends RelativeLayout implements KeyboardProxy {
 
-	private AnimationContainerScene animationScene;
-//	private AnimationContainerView animationContainerView;
+//	private AnimationContainerScene animationScene;
+	private AnimationContainerView animationContainerView;
 	private KeyboardContainer keyboardContainer;
 
 	public KeyboardRootView(Context context, AttributeSet attrs) {
@@ -24,22 +24,22 @@ public class KeyboardRootView extends RelativeLayout implements KeyboardProxy {
 
 	public void requestUI(Context context, SurfaceViewConfig builder) {
 		keyboardContainer = findViewById(R.id.keyboard_container);
-		AnimationContainerView noteAnimContainer = findViewById(R.id.note_anim_container);
-		animationScene = new AnimationContainerScene(context, builder);
-		animationScene.setKeyboardParams(keyboardContainer.pianoView.getKeyboardParams());
+		animationContainerView = findViewById(R.id.note_anim_container);
+//		animationScene = new AnimationContainerScene(context, builder);
+//		animationScene.setKeyboardParams(keyboardContainer.pianoView.getKeyboardParams());
 //		animationContainerView = new AnimationContainerView(context,keyboardContainer.pianoView.getKeyboardParams());
-		noteAnimContainer.setKeyboardParams(keyboardContainer.pianoView.getKeyboardParams());
+		animationContainerView.setKeyboardParams(keyboardContainer.pianoView.getKeyboardParams());
 		float whiteKeyActualHeight = KeyboardHeight.currentHeightPixels();
 		Log.d("ttt", "whiteKeyActualHeight = " + whiteKeyActualHeight);
 		keyboardContainer.pianoView.setContentHeight((int) whiteKeyActualHeight);
-		addOnScaleListener(noteAnimContainer);
-		addOnScrollListener(noteAnimContainer);
+		addOnScaleListener(animationContainerView);
+		addOnScrollListener(animationContainerView);
 		keyboardContainer.requestUI();
-		noteAnimContainer.setBackgroundColor(MyApplication.getInstance().getResources().getColor(R.color.colorBlack));
+		animationContainerView.setBackgroundColor(MyApplication.getInstance().getResources().getColor(R.color.colorBlack));
 
-		if (builder.getMode() == SurfaceViewConfig.CHALLENGE_MODE || builder.getMode() == SurfaceViewConfig.PRACTICE_MODE) {
-			animationScene.drawGuideline();
-		}
+//		if (builder.getMode() == SurfaceViewConfig.CHALLENGE_MODE || builder.getMode() == SurfaceViewConfig.PRACTICE_MODE) {
+//			animationScene.drawGuideline();
+//		}
 //		noteAnimContainer.addView(animationContainerView, 0);
 	}
 
@@ -59,12 +59,12 @@ public class KeyboardRootView extends RelativeLayout implements KeyboardProxy {
 		keyboardContainer.removeOnScrollListener(scrollingObserver);
 	}
 
-	public AnimationContainerScene getAnimationScene() {
-		return animationScene;
-	}
+//	public AnimationContainerScene getAnimationScene() {
+////		return animationScene;
+//	}
 
 	public void cleanUp() {
-		animationScene.removeAllChildren(true);
+//		animationScene.removeAllChildren(true);
 	}
 
 	public KeyboardProxy getKeyboardProxy() {
@@ -72,7 +72,7 @@ public class KeyboardRootView extends RelativeLayout implements KeyboardProxy {
 	}
 
 	public AnimationLayerProxy getAnimLayerProxy() {
-		return animationScene.getAnimationLayerProxy();
+		return animationContainerView.getAnimationLayerProxy();
 	}
 
 	public void setOnHintListener(Runnable onHintListener) {

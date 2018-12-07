@@ -58,7 +58,7 @@ public class GamePlayActivity extends AppCompatActivity implements Constant, Vie
 			@Override
 			public void run() {
 				keyboardRootView.scrollToKey("c4");
-//				startGame();
+				startGame();
 			}
 		},0);
 	}
@@ -106,10 +106,10 @@ public class GamePlayActivity extends AppCompatActivity implements Constant, Vie
 
 			@Override
 			public void onGainScore(Cell cell, int score, ChallengeScoreCalculator.EnumAccuracy accuracy) {
-				float xScaleFactor = KeyboardWidth.whiteKeyWidthPixels() / Constant.originWhiteKeyWidth;
-				float padding = xScaleFactor * cell.getWidth() / 2;
-				float x = (cell.getPositionRef().x * xScaleFactor + keyboardRootView.getAnimationScene().getScrollX()) + padding;
-				float y = KeyboardHeight.currentHeightPixels() + cell.getHeight() + CommonUtils.convertDpToPixel(12);
+//				float xScaleFactor = KeyboardWidth.whiteKeyWidthPixels() / Constant.originWhiteKeyWidth;
+//				float padding = xScaleFactor * cell.getWidth() / 2;
+//				float x = (cell.getPositionRef().x * xScaleFactor + keyboardRootView.getAnimationScene().getScrollX()) + padding;
+//				float y = KeyboardHeight.currentHeightPixels() + cell.getHeight() + CommonUtils.convertDpToPixel(12);
 			}
 
 			@Override

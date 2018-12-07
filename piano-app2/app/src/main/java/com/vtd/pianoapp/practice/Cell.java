@@ -1,6 +1,7 @@
 package com.vtd.pianoapp.practice;
 
 
+import android.util.Log;
 import com.vtd.pianoapp.common.Constant;
 import com.vtd.pianoapp.common.UserConfig;
 import com.vtd.pianoapp.songobject.GamePlayNote;

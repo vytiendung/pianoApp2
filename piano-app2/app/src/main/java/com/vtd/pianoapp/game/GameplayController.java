@@ -81,6 +81,7 @@ public class GameplayController implements FrameEventListener, PerformActionList
 	@Override
 	public void onEnterFrame(float dt) {
 		if (!isAnimationResumed()) return;
+		Log.d(TAG, "onEnterFrame: " + dt);
 		elapsedTime += dt * 1000f;
 		float deltaDistance = dt * animationSpeed;
 		animLayerProxy.setY(animLayerProxy.getY() - deltaDistance);
@@ -435,40 +436,40 @@ public class GameplayController implements FrameEventListener, PerformActionList
 	}
 
 	private void renderRow(int stepIndex) {
-		ArrayList<Cell> row;
-		try {
-			row = rowsHolder.get(stepIndex);
-		} catch (Exception e) {
-			row = null;
-		}
-		if (row != null) {
-			for (int i = 0; i < row.size(); i++) {
-				row.get(i).recreate();
-				createNoteProperties(stepIndex, i);
-			}
-		} else {
-			row = new ArrayList<>();
-			RubyStep rubyStep = songData.steps.get(stepIndex);
-			rowsHolder.put(stepIndex, row);
-			SharedKeyboardParams keyboardParams = keyboardProxy.getSharedKeyboardParams();
-			float xScaleFactor = keyboardParams.whiteKeyWidth / Constant.originWhiteKeyWidth;
-			for (int i = 0; i < rubyStep.notes.size(); i++) {
-				GamePlayNote gamePlayNote = rubyStep.notes.get(i);
-//				float width = NoteUtils.isSharpNote(gamePlayNote) ? keyboardParams.blackKeyWidth : keyboardParams.whiteKeyWidth;
-				float width = NoteUtils.isSharpNote(gamePlayNote) ?
-						PianoKeyHelper.getBlackKeyWidthFromWhiteKeyWidth(Constant.originWhiteKeyWidth) : Constant
-						.originWhiteKeyWidth;
-				float height = CellDirector.getHeightByDuration(gamePlayNote.duration);
-				Cell cell = Cell.make(gamePlayNote, width, height);
-				row.add(cell);
-				animLayerProxy.insert(cell);
-				int noteIndex = NoteUtils.keyIndexOf(gamePlayNote.id);
-				float x = keyboardParams.keyPosMapping.get(noteIndex).x / xScaleFactor;
-				float y = stepProperties.get(stepIndex).y;
-				cell.setPosition(x, y);
-				createNoteProperties(stepIndex, i);
-			}
-		}
+//		ArrayList<Cell> row;
+//		try {
+//			row = rowsHolder.get(stepIndex);
+//		} catch (Exception e) {
+//			row = null;
+//		}
+//		if (row != null) {
+//			for (int i = 0; i < row.size(); i++) {
+//				row.get(i).recreate();
+//				createNoteProperties(stepIndex, i);
+//			}
+//		} else {
+//			row = new ArrayList<>();
+//			RubyStep rubyStep = songData.steps.get(stepIndex);
+//			rowsHolder.put(stepIndex, row);
+//			SharedKeyboardParams keyboardParams = keyboardProxy.getSharedKeyboardParams();
+//			float xScaleFactor = keyboardParams.whiteKeyWidth / Constant.originWhiteKeyWidth;
+//			for (int i = 0; i < rubyStep.notes.size(); i++) {
+//				GamePlayNote gamePlayNote = rubyStep.notes.get(i);
+////				float width = NoteUtils.isSharpNote(gamePlayNote) ? keyboardParams.blackKeyWidth : keyboardParams.whiteKeyWidth;
+//				float width = NoteUtils.isSharpNote(gamePlayNote) ?
+//						PianoKeyHelper.getBlackKeyWidthFromWhiteKeyWidth(Constant.originWhiteKeyWidth) : Constant
+//						.originWhiteKeyWidth;
+//				float height = CellDirector.getHeightByDuration(gamePlayNote.duration);
+//				Cell cell = Cell.make(gamePlayNote, width, height);
+//				row.add(cell);
+//				animLayerProxy.insert(cell);
+//				int noteIndex = NoteUtils.keyIndexOf(gamePlayNote.id);
+//				float x = keyboardParams.keyPosMapping.get(noteIndex).x / xScaleFactor;
+//				float y = stepProperties.get(stepIndex).y;
+//				cell.setPosition(x, y);
+//				createNoteProperties(stepIndex, i);
+//			}
+//		}
 	}
 
 	private void createNoteProperties(int stepIndex, int noteIndex) {
@@ -712,6 +713,23 @@ public class GameplayController implements FrameEventListener, PerformActionList
 		needReCaculate = false;
 		if (listener != null)
 			listener.onStarted();
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				long lastEnterFrameTime = System.currentTimeMillis();
+				while (true) {
+					long currentTime = System.currentTimeMillis();
+					float deltaTime = (currentTime - lastEnterFrameTime) * 0.001f;
+					lastEnterFrameTime = currentTime;
+					onEnterFrame(deltaTime);
+					try {
+						Thread.sleep(10);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		}).start();
 	}
 
 	private void setupScoreCalculator() {

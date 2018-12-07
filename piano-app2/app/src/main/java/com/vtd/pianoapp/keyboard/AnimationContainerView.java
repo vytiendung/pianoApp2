@@ -7,10 +7,9 @@ import android.graphics.RectF;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.LinearLayout;
+import android.view.ViewTreeObserver;
 import android.widget.RelativeLayout;
+import com.vtd.pianoapp.R;
 import com.vtd.pianoapp.common.Config;
 import com.vtd.pianoapp.common.Constant;
 import com.vtd.pianoapp.object.Position;
@@ -18,10 +17,12 @@ import com.vtd.pianoapp.ui.BitmapFromPlist;
 import com.vtd.pianoapp.ui.BitmapInfoProperty;
 import com.vtd.pianoapp.util.BitmapUtils;
 
-public class AnimationContainerView extends View implements KeyboardScalingObserver, KeyboardScrollingObserver {
+public class AnimationContainerView extends RelativeLayout implements KeyboardScalingObserver, KeyboardScrollingObserver {
 	private BitmapFromPlist bitmapPlist;
 	private Paint keyPaint;
 	private SharedKeyboardParams keyboardParams;
+
+	private AnimationLayerCanvas animationLayerCanvas;
 
 
 	public AnimationContainerView(Context context, SharedKeyboardParams keyboardParams) {
@@ -40,23 +41,19 @@ public class AnimationContainerView extends View implements KeyboardScalingObser
 	}
 
 	private void init() {
-		Log.d("abcxxx", "init: " + getHeight() + " " + getWidth());
 		bitmapPlist = BitmapUtils.getBitmapFromPlist(Config.getInstance().imgPath + "spriteCache.plist");
 		keyPaint = new Paint();
 		keyPaint.setDither(true);
-//		post(new Runnable() {
-//			@Override
-//			public void run() {
-//				Log.d("abcxxx onSizeChanged", "run: " + keyboardParams.keyboardW);
-//				setLayoutParams(new RelativeLayout.LayoutParams(keyboardParams.keyboardW, getHeight()));
-//			}
-//		});
+	}
 
+	@Override
+	protected void onFinishInflate() {
+		super.onFinishInflate();
+		animationLayerCanvas = findViewById(R.id.animationlayercanvas);
 	}
 
 	@Override
 	protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-		Log.d("abcxxx", "onSizeChanged:2 " + w + " " + h + " " + oldh + " " + oldw);
 		super.onSizeChanged(w, h, oldw, oldh);
 	}
 
@@ -66,7 +63,6 @@ public class AnimationContainerView extends View implements KeyboardScalingObser
 	}
 
 	private void render(Canvas canvas) {
-		Log.d("abcxxx", "render: " + getWidth() + " " + getHeight());
 		float key_guide_w = KeyboardWidth.whiteKeyWidthPixels() * Constant.WIDTH_BLACK_RATIO;
 		float key_guide_h = Config.getInstance().winHeight - KeyboardHeight.currentHeightPixels();
 		float key_guide_w_del =  key_guide_w/4;
@@ -81,6 +77,10 @@ public class AnimationContainerView extends View implements KeyboardScalingObser
 			}
 		}
 
+	}
+
+	public AnimationLayerProxy getAnimationLayerProxy(){
+		return animationLayerCanvas;
 	}
 
 	@Override

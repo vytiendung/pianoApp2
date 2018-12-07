@@ -281,7 +281,6 @@ public class PianoView extends View implements  KeyboardScalingObserver {
 	@Override
 	protected void onSizeChanged(int w, int h, int oldw, int oldh) {
 //		Log.d(TAG, "onSizeChanged: xxxx");
-		Log.d("abcxxx", "onSizeChanged:1 " + w + " " + h + " " + oldh + " " + oldw);
 
 		super.onSizeChanged(w, h, oldw, oldh);
 		keyboardParams.keyboardW = w;
@@ -347,6 +346,7 @@ public class PianoView extends View implements  KeyboardScalingObserver {
 			preWhiteKeyRight = right;
 		}
 		canvas.drawBitmap(bitmapPlist.image, bitmapInfoProperty.rect, desRect, keyPaint);
+		Log.d(TAG, "drawKey: " + preWhiteKeyRight + " " + point.y);
 		if (hasLabel) {
 			drawKeyLabel(data, canvas);
 		}
